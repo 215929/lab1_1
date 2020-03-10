@@ -16,37 +16,39 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-public class OfferItem {
+// TODO
 
-    // product
+public class OfferItem {
+    //TODO dodaj Money
+    // product TODO do innej klasy
     private String productId;
 
-    private BigDecimal productPrice;
+    private Money productPrice;
 
     private String productName;
 
     private Date productSnapshotDate;
 
     private String productType;
+    // TODO dotąd
 
     private int quantity;
 
-    private BigDecimal totalCost;
+    private Money totalCost;
 
-    private String currency;
 
-    // discount
+    // discount TODO nowa klasa
     private String discountCause;
 
-    private BigDecimal discount;
+    private Money discount;
 
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
+    public OfferItem(String productId, Money productPrice, String productName, Date productSnapshotDate, String productType,
             int quantity) {
         this(productId, productPrice, productName, productSnapshotDate, productType, quantity, null, null);
     }
 
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
-            int quantity, BigDecimal discount, String discountCause) {
+    public OfferItem(String productId, Money productPrice, String productName, Date productSnapshotDate, String productType,
+            int quantity, Money discount, String discountCause) {
         this.productId = productId;
         this.productPrice = productPrice;
         this.productName = productName;
@@ -57,13 +59,12 @@ public class OfferItem {
         this.discount = discount;
         this.discountCause = discountCause;
 
-        BigDecimal discountValue = new BigDecimal(0);
+        Money discountValue = new Money(new BigDecimal(0));
         if (discount != null) {
-            discountValue = discountValue.add(discount);
+            discountValue.value = discountValue.value.add(discount.value);
         }
 
-        this.totalCost = productPrice.multiply(new BigDecimal(quantity))
-                                     .subtract(discountValue);
+        this.totalCost.value = productPrice.value.multiply(new BigDecimal(quantity)).subtract(discountValue.value);
     }
 
     public String getProductId() {
@@ -71,7 +72,7 @@ public class OfferItem {
     }
 
     public BigDecimal getProductPrice() {
-        return productPrice;
+        return productPrice.value;
     }
 
     public String getProductName() {
@@ -87,15 +88,15 @@ public class OfferItem {
     }
 
     public BigDecimal getTotalCost() {
-        return totalCost;
+        return totalCost.value;
     }
 
     public String getTotalCostCurrency() {
-        return currency;
+        return totalCost.currency;
     }
 
     public BigDecimal getDiscount() {
-        return discount;
+        return discount.value;
     }
 
     public String getDiscountCause() {
@@ -108,7 +109,7 @@ public class OfferItem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(currency, discount, discountCause, productId, productName, productPrice, productSnapshotDate, productType,
+        return Objects.hash(discount, discountCause, productId, productName, productPrice, productSnapshotDate, productType,
                 quantity, totalCost);
     }
 
@@ -124,8 +125,7 @@ public class OfferItem {
             return false;
         }
         OfferItem other = (OfferItem) obj;
-        return Objects.equals(currency, other.currency)
-               && Objects.equals(discount, other.discount)
+        return Objects.equals(discount, other.discount)
                && Objects.equals(discountCause, other.discountCause)
                && Objects.equals(productId, other.productId)
                && Objects.equals(productName, other.productName)
@@ -136,9 +136,10 @@ public class OfferItem {
                && Objects.equals(totalCost, other.totalCost);
     }
 
+
     /**
      *
-     * @param item
+     * @param other
      * @param delta
      *            acceptable percentage difference
      * @return
@@ -180,12 +181,12 @@ public class OfferItem {
 
         BigDecimal max;
         BigDecimal min;
-        if (totalCost.compareTo(other.totalCost) > 0) {
-            max = totalCost;
-            min = other.totalCost;
+        if (totalCost.value.compareTo(other.totalCost.value) > 0) {
+            max = totalCost.value;
+            min = other.totalCost.value;
         } else {
-            max = other.totalCost;
-            min = totalCost;
+            max = other.totalCost.value;
+            min = totalCost.value;
         }
 
         BigDecimal difference = max.subtract(min);
