@@ -5,8 +5,8 @@ import java.util.Objects;
 
 public class Money {
 
-    public BigDecimal value;
-    public String currency;
+    private BigDecimal value;
+    private String currency;
 
     public Money(BigDecimal value, String currency) {
         this.value = value;
@@ -19,6 +19,25 @@ public class Money {
     }
 
     public Money() {}
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public Money addBG (BigDecimal value) {
+        return new Money(this.value.add(value));
+    }
+    public Money subtractBG (BigDecimal value) {
+        return new Money(this.value.subtract(value));
+    }
+    public Money multiplyInt (int value) {
+        return new Money(this.value.multiply(new BigDecimal(value)));
+    }
+
 
     @Override
     public int hashCode() {
@@ -40,4 +59,5 @@ public class Money {
 
         return Objects.equals(value, other.value) && Objects.equals(currency, other.currency);
     }
+
 }

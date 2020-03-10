@@ -1,4 +1,5 @@
 package pl.com.bottega.ecommerce.sales.domain.offer;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Discount {
@@ -7,8 +8,8 @@ public class Discount {
 
     public Discount() {}
 
-    public Money getValue() {
-        return value;
+    public BigDecimal getValue() {
+        return value.getValue();
     }
 
     public String getCause() {
