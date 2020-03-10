@@ -5,6 +5,8 @@ public class Discount {
     private String discountCause;
     private Money value;
 
+    public Discount() {}
+
     public Money getValue() {
         return value;
     }
