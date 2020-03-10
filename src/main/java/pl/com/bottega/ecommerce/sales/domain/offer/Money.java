@@ -18,6 +18,8 @@ public class Money {
         this.currency = null;
     }
 
+    public Money() {}
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

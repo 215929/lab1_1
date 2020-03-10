@@ -19,17 +19,7 @@ import java.util.Objects;
 // TODO
 
 public class OfferItem {
-    // product TODO do innej klasy
-    private String productId;
-
-    private Money productPrice;
-
-    private String productName;
-
-    private Date productSnapshotDate;
-
-    private String productType;
-    // TODO dotąd
+    private Product product;
 
     private int quantity;
 
@@ -53,7 +43,7 @@ public class OfferItem {
         this.quantity = quantity;
         this.discount = discount;
 
-        this.totalCost.value = productPrice.value.multiply(new BigDecimal(quantity)).subtract(discount.getValue().value);
+        this.totalCost = new Money(productPrice.value.multiply(new BigDecimal(quantity)).subtract(discount.getValue().value));
     }
 
     public String getProductId() {
