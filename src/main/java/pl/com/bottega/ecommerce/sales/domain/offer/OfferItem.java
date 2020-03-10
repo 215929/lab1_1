@@ -13,10 +13,7 @@
 package pl.com.bottega.ecommerce.sales.domain.offer;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Objects;
-
-// TODO
 
 public class OfferItem {
     private Product product;
@@ -27,43 +24,21 @@ public class OfferItem {
 
     private Discount discount;
 
-    public OfferItem(String productId, Money productPrice, String productName, Date productSnapshotDate, String productType,
-            int quantity) {
-        this(productId, productPrice, productName, productSnapshotDate, productType, quantity, null);
+    public OfferItem(Product product, int quantity) {
+        this(product, quantity, null);
     }
 
-    public OfferItem(String productId, Money productPrice, String productName, Date productSnapshotDate, String productType,
-            int quantity, Discount discount) {
-        this.productId = productId;
-        this.productPrice = productPrice;
-        this.productName = productName;
-        this.productSnapshotDate = productSnapshotDate;
-        this.productType = productType;
+    public OfferItem(Product product, int quantity, Discount discount) {
+        this.product = product;
 
         this.quantity = quantity;
         this.discount = discount;
 
-        this.totalCost = new Money(productPrice.value.multiply(new BigDecimal(quantity)).subtract(discount.getValue().value));
+        this.totalCost = new Money(product.getPrice().value.multiply(new BigDecimal(quantity)).subtract(discount.getValue().value));
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public BigDecimal getProductPrice() {
-        return productPrice.value;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public Date getProductSnapshotDate() {
-        return productSnapshotDate;
-    }
-
-    public String getProductType() {
-        return productType;
+    public Product getProduct() {
+        return product;
     }
 
     public BigDecimal getTotalCost() {
@@ -84,8 +59,7 @@ public class OfferItem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(discount, productId, productName, productPrice, productSnapshotDate, productType,
-                quantity, totalCost);
+        return Objects.hash(discount, product, quantity, totalCost);
     }
 
     @Override
@@ -101,11 +75,7 @@ public class OfferItem {
         }
         OfferItem other = (OfferItem) obj;
         return Objects.equals(discount, other.discount)
-               && Objects.equals(productId, other.productId)
-               && Objects.equals(productName, other.productName)
-               && Objects.equals(productPrice, other.productPrice)
-               && Objects.equals(productSnapshotDate, other.productSnapshotDate)
-               && Objects.equals(productType, other.productType)
+               && Objects.equals(product, other.product)
                && quantity == other.quantity
                && Objects.equals(totalCost, other.totalCost);
     }
@@ -119,33 +89,11 @@ public class OfferItem {
      * @return
      */
     public boolean sameAs(OfferItem other, double delta) {
-        if (productPrice == null) {
-            if (other.productPrice != null) {
+        if (product == null) {
+            if (other.product != null) {
                 return false;
             }
-        } else if (!productPrice.equals(other.productPrice)) {
-            return false;
-        }
-        if (productName == null) {
-            if (other.productName != null) {
-                return false;
-            }
-        } else if (!productName.equals(other.productName)) {
-            return false;
-        }
-
-        if (productId == null) {
-            if (other.productId != null) {
-                return false;
-            }
-        } else if (!productId.equals(other.productId)) {
-            return false;
-        }
-        if (productType == null) {
-            if (other.productType != null) {
-                return false;
-            }
-        } else if (!productType.equals(other.productType)) {
+        } else if (!product.equals(other.product)) {
             return false;
         }
 
