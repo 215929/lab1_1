@@ -41,6 +41,10 @@ public class Product {
         return type;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, price, name, snapshotDate, type);
+    }
 
     @Override
     public boolean equals(Object obj) {

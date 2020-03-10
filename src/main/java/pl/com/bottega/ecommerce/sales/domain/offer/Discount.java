@@ -14,6 +14,11 @@ public class Discount {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(discountCause, value);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

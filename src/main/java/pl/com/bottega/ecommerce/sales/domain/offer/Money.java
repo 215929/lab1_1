@@ -21,6 +21,11 @@ public class Money {
     public Money() {}
 
     @Override
+    public int hashCode() {
+        return Objects.hash(value, currency);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
