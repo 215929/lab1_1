@@ -30,7 +30,7 @@ public class OfferItem {
         this.quantity = quantity;
         this.discount = discount;
 
-        this.totalCost = product.getPrice().multiplyInt(quantity).subtractBG(discount.getValue());
+        this.totalCost = product.getPrice().multiply(quantity).subtract(discount.getValue());
     }
 
     public Product getProduct() {

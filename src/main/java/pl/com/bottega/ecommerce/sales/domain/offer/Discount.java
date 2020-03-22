@@ -8,8 +8,8 @@ public class Discount {
 
     public Discount() {}
 
-    public BigDecimal getValue() {
-        return value.getValue();
+    public Money getValue() {
+        return value;
     }
 
     public String getCause() {

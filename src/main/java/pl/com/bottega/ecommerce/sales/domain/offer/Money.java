@@ -28,13 +28,13 @@ public class Money {
         return currency;
     }
 
-    public Money addBG (BigDecimal value) {
-        return new Money(this.value.add(value));
+    public Money add (Money value) {
+        return new Money(this.value.add(value.getValue()));
     }
-    public Money subtractBG (BigDecimal value) {
-        return new Money(this.value.subtract(value));
+    public Money subtract (Money value) {
+        return new Money(this.value.subtract(value.getValue()));
     }
-    public Money multiplyInt (int value) {
+    public Money multiply (int value) {
         return new Money(this.value.multiply(new BigDecimal(value)));
     }
 
